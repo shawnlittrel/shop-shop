@@ -12,6 +12,9 @@ const StoreProvider = ({ value = [], ...props }) => {
           products: [],
           categories: [],
           currentCategory: '',
+          cartOpen: false,
+          cart: [],
+          
      });
 
      //confirm reducer is working by logging most up to date version of global state object
