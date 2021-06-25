@@ -6,8 +6,6 @@ export function pluralize(name, count) {
 }
 
 export function idbPromise(storeName, method, object) {
-
-  console.log('object', object);
   
   return new Promise((resolve, reject) => {
     const request = window.indexedDB.open('shop-shop', 1);

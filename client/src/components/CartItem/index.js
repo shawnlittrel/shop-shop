@@ -3,11 +3,17 @@ import { useStoreContext } from "../../utils/GlobalState";
 import { REMOVE_FROM_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import { idbPromise } from "../../utils/helpers";
 
+//import redux packages  useSelector reads from store and useDispatch sends actions to store
+import { useSelector, useDispatch } from 'react-redux';
+//import action creators
+import { remove, update } from '../../state/reducers/cartSlice'
+
 const CartItem = ({ item }) => {
-
+  //change this from useStoreContext to useSelector and useDispatch
   const [, dispatch] = useStoreContext();
-
+  //const readCart = useSelector(state.cart.)
   const removeFromCart = item => {
+    //console.log(state);
     dispatch({
       type: REMOVE_FROM_CART,
       _id: item._id

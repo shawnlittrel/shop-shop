@@ -14,12 +14,15 @@ import {
 export const reducer = (state, action) => {
   switch (action.type) {
     case UPDATE_PRODUCTS:
+      console.log('update products', state);
+
       return {
         ...state,
         products: [...action.products],
       };
 
     case ADD_TO_CART:
+      console.log('add to cart', state);
       return {
         ...state,
         cartOpen: true,
@@ -27,12 +30,14 @@ export const reducer = (state, action) => {
       };
 
     case ADD_MULTIPLE_TO_CART:
+      console.log('add multiple', state);
       return {
         ...state,
         cart: [...state.cart, ...action.products],
       };
 
     case UPDATE_CART_QUANTITY:
+      console.log('update cart', state);
       return {
         ...state,
         cartOpen: true,
@@ -45,6 +50,7 @@ export const reducer = (state, action) => {
       };
 
     case REMOVE_FROM_CART:
+      console.log('remove from cart', state);
       let newState = state.cart.filter(product => {
         return product._id !== action._id;
       });

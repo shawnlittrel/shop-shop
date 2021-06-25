@@ -1,15 +1,7 @@
-import { reducer } from '../utils/reducers';
-import {
-  UPDATE_PRODUCTS,
-  ADD_TO_CART,
-  UPDATE_CART_QUANTITY,
-  REMOVE_FROM_CART,
-  ADD_MULTIPLE_TO_CART,
-  UPDATE_CATEGORIES,
-  UPDATE_CURRENT_CATEGORY,
-  CLEAR_CART,
-  TOGGLE_CART
-} from '../utils/actions';
+
+import cartReducer from '../state/reducers/cartReducer';
+import categoryReducer from '../state/reducers/categoryReducer';
+import productReducer from '../state/reducers/productReducer';
 
 const initialState = {
   products: [],
@@ -31,31 +23,44 @@ const initialState = {
 };
 
 test('UPDATE_PRODUCTS', () => {
-  let newState = reducer(initialState, {
-    type: UPDATE_PRODUCTS,
-    products: [{}, {}]
-  });
+  const action = { 
+    type: 'UPDATE_PRODUCTS', 
+    products: [{},{}]
+  }
+
+  const newState = productReducer(initialState, action)
 
   expect(newState.products.length).toBe(2);
   expect(initialState.products.length).toBe(0);
-});
+  });
+
+
+
 
 test('ADD_TO_CART', () => {
-  let newState = reducer(initialState, {
-    type: ADD_TO_CART,
-    product: { purchaseQuantity: 1 }
-  });
+  const action = {
+    type: 'ADD_TO_CART',
+    product: {
+      _id: '3',
+      name: 'Soup',
+      purchaseQuantity: 1
+    },
+  }
+  
+  let newState = cartReducer(initialState, action)
 
   expect(newState.cart.length).toBe(3);
   expect(initialState.cart.length).toBe(2);
 });
 
 test('UPDATE_CART_QUANTITY', () => {
-  let newState = reducer(initialState, {
-    type: UPDATE_CART_QUANTITY,
-    _id: '1',
+  const action = {
+    type: 'UPDATE_CART_QUANTITY',
+    _id: '1', 
     purchaseQuantity: 3
-  });
+  }
+
+  const newState = cartReducer(initialState, action)
 
   expect(newState.cartOpen).toBe(true);
   expect(newState.cart[0].purchaseQuantity).toBe(3);
@@ -64,19 +69,23 @@ test('UPDATE_CART_QUANTITY', () => {
 });
 
 test('REMOVE_FROM_CART', () => {
-  let newState1 = reducer(initialState, {
-    type: REMOVE_FROM_CART,
+  const action1 = {
+    type: 'REMOVE_FROM_CART',
     _id: '1'
-  });
+  }
+
+  let newState1 = cartReducer(initialState, action1)
 
   expect(newState1.cartOpen).toBe(true);
   expect(newState1.cart.length).toBe(1);
   expect(newState1.cart[0]._id).toBe('2');
 
-  let newState2 = reducer(newState1, {
-    type: REMOVE_FROM_CART,
+  const action2 = {
+    type: 'REMOVE_FROM_CART',
     _id: '2'
-  });
+  }
+
+  let newState2 = cartReducer(newState1, action2)
 
   expect(newState2.cartOpen).toBe(false);
   expect(newState2.cart.length).toBe(0);
@@ -85,39 +94,47 @@ test('REMOVE_FROM_CART', () => {
 });
 
 test('ADD_MULTIPLE_TO_CART', () => {
-  let newState = reducer(initialState, {
-    type: ADD_MULTIPLE_TO_CART,
+  const action = {
+    type: 'ADD_MULTIPLE_TO_CART',
     products: [{}, {}]
-  });
+  }
+
+  let newState = cartReducer(initialState, action)
 
   expect(newState.cart.length).toBe(4);
   expect(initialState.cart.length).toBe(2);
 });
 
 test('UPDATE_CATEGORIES', () => {
-  let newState = reducer(initialState, {
-    type: UPDATE_CATEGORIES,
+  const action = {
+    type: 'UPDATE_CATEGORIES',
     categories: [{}, {}]
-  });
+  }
+
+  let newState = categoryReducer(initialState, action)
 
   expect(newState.categories.length).toBe(2);
   expect(initialState.categories.length).toBe(1);
 });
 
 test('UPDATE_CURRENT_CATEGORY', () => {
-  let newState = reducer(initialState, {
-    type: UPDATE_CURRENT_CATEGORY,
+  const action = {
+    type: 'UPDATE_CURRENT_CATEGORY',
     currentCategory: '2'
-  });
+  }
+
+  let newState = categoryReducer(initialState, action)
 
   expect(newState.currentCategory).toBe('2');
   expect(initialState.currentCategory).toBe('1');
 });
 
 test('CLEAR_CART', () => {
-  let newState = reducer(initialState, {
-    type: CLEAR_CART
-  });
+  const action = {
+    type: 'CLEAR_CART'
+  }
+
+  let newState = cartReducer(initialState, action)
 
   expect(newState.cartOpen).toBe(false);
   expect(newState.cart.length).toBe(0);
@@ -125,16 +142,16 @@ test('CLEAR_CART', () => {
 });
 
 test('TOGGLE_CART', () => {
-  let newState = reducer(initialState, {
-    type: TOGGLE_CART
-  });
+const action = {
+    type: 'TOGGLE_CART'
+  }
 
-  expect(newState.cartOpen).toBe(true);
+  let newState1 = cartReducer(initialState, action)
+
+  expect(newState1.cartOpen).toBe(true);
   expect(initialState.cartOpen).toBe(false);
   
-  let newState2 = reducer(newState, {
-    type: TOGGLE_CART
-  });
+  let newState2 = cartReducer(newState1, action)
 
   expect(newState2.cartOpen).toBe(false);
 });
