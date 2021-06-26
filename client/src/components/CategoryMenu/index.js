@@ -12,6 +12,8 @@ function CategoryMenu() {
 
   const { loading, data: categoryData } = useQuery(QUERY_CATEGORIES);
 
+  console.log('state', state);
+
   useEffect(() => {
     if (categoryData) {
       dispatch({
