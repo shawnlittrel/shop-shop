@@ -5,13 +5,14 @@ import { idbPromise } from '../../utils/helpers';
 import { useSelector, useDispatch } from 'react-redux';
 
 function CategoryMenu() {
-  const categories = useSelector((state) => state.category.categories);
+  const categories = useSelector((state) => state.categories);
   const oldState = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const { loading, data: categoryData } = useQuery(QUERY_CATEGORIES);
 
   console.log('initialState', oldState);
+  console.log('categories', categories);
 
   useEffect(() => {
     if (categoryData) {

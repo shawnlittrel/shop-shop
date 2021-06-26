@@ -1,10 +1,10 @@
 import React from "react";
 import { idbPromise } from "../../utils/helpers";
 //import redux packages  useSelector reads from store and useDispatch sends actions to store
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const CartItem = ({ item }) => {
-  const cart = useSelector((state) => state.cart);
+  //const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const removeFromCart = (item) => {
     dispatch({

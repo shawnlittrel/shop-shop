@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 function ProductList() {
   //useSelector allows us to read data from store and takes entire store as its argument
-  const { currentCategory, products, categories, cart } = useSelector((state) => state.category);
+  const { currentCategory, products } = useSelector(state => state);
   const dispatch = useDispatch();
 
   console.log('PRODUCTS', products)

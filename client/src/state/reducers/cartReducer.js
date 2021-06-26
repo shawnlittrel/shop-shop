@@ -1,6 +1,4 @@
-const initialState = {
-
-}
+const initialState = {};
 
 export default function cartReducer(state = initialState, action) {
      //look at the action that happened and determine how to update status
@@ -43,11 +41,6 @@ export default function cartReducer(state = initialState, action) {
                     ...state,
                     cartOpen: false,
                     cart: []
-               };
-          case 'TOGGLE_CART':
-               return{
-                    ...state,
-                    cartOpen: !state.cartOpen
                };
           default:
                return{
