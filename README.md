@@ -32,7 +32,7 @@ No install necessary.
     
 ## Usage
 ---
-The app is deployed to Heroku.
+The app is deployed to [Heroku](https://shawnlittrel-shopshop.herokuapp.com/).
 
     
 ## Credits
