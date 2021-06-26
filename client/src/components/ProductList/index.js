@@ -1,14 +1,38 @@
-import React from 'react';
-import { useQuery } from '@apollo/client';
+import React, { useEffect } from "react";
+import ProductItem from "../ProductItem";
+import { useQuery } from "@apollo/react-hooks";
+import { QUERY_PRODUCTS } from "../../utils/queries";
+import { idbPromise } from "../../utils/helpers";
+import spinner from "../../assets/spinner.gif";
+import { useSelector, useDispatch } from "react-redux";
 
-import ProductItem from '../ProductItem';
-import { QUERY_PRODUCTS } from '../../utils/queries';
-import spinner from '../../assets/spinner.gif';
+function ProductList() {
+  //useSelector allows us to read data from store and takes entire store as its argument
+  const { currentCategory, products } = useSelector(state => state);
+  const dispatch = useDispatch();
 
-function ProductList({ currentCategory }) {
+  console.log('PRODUCTS', products)
   const { loading, data } = useQuery(QUERY_PRODUCTS);
 
-  const products = data?.products || [];
+  useEffect(() => {
+    if (data) {
+      console.log('DATA.PRODUCTS', data.products);
+      dispatch({
+        type: 'UPDATE_PRODUCTS',
+        products: data.products,
+      });
+      data.products.forEach((product) => {
+        idbPromise("products", "put", product);
+      });
+    } else if (!loading) {
+      idbPromise("products", "get").then((products) => {
+        dispatch({
+          type: 'UPDATE_PRODUCTS',
+          products: products,
+        });
+      });
+    }
+  }, [data, loading, dispatch]);
 
   function filterProducts() {
     if (!currentCategory) {
