@@ -1,3 +1,7 @@
+const initialState = {
+
+};
+
 export default function categoryReducer(state = initialState, action) {
      switch (action.type) {
           case 'UPDATE_CATEGORIES': {

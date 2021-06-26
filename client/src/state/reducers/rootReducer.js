@@ -3,13 +3,6 @@ import cartReducer from "./cartReducer";
 import productReducer from "./productReducer";
 import categoryReducer from "./categoryReducer";
 
-const initialState = {
-     products: [],
-     cart: [],
-     cartOpen: false,
-     categories: [],
-     currentCategory: '',
-};
 
 const rootReducer = combineReducers({
   //each reducer only sees and manages its own chunk of the whole global state

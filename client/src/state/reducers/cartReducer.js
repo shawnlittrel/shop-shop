@@ -1,10 +1,13 @@
+const initialState = {
+
+}
+
 export default function cartReducer(state = initialState, action) {
      //look at the action that happened and determine how to update status
 
      switch (action.type) {
           case 'ADD_TO_CART':
                return {
-
                     ...state,
                     cartOpen: true,
                     cart: [...state.cart, action.product]
@@ -12,7 +15,7 @@ export default function cartReducer(state = initialState, action) {
           case 'ADD_MULTIPLE_TO_CART':
                return {
                     ...state,
-                    cart: [...state.cart, ...action.products]
+                    cart: [state.cart, ...action.products]
                };
           case 'UPDATE_CART_QUANTITY':
                return {

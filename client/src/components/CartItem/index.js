@@ -1,57 +1,46 @@
-import React from 'react';
-import { useStoreContext } from "../../utils/GlobalState";
-import { REMOVE_FROM_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
+import React from "react";
 import { idbPromise } from "../../utils/helpers";
-
 //import redux packages  useSelector reads from store and useDispatch sends actions to store
-import { useSelector, useDispatch } from 'react-redux';
-//import action creators
-import { remove, update } from '../../state/reducers/cartSlice'
+import { useSelector, useDispatch } from "react-redux";
 
 const CartItem = ({ item }) => {
-  //change this from useStoreContext to useSelector and useDispatch
-  const [, dispatch] = useStoreContext();
-  //const readCart = useSelector(state.cart.)
-  const removeFromCart = item => {
-    //console.log(state);
+  const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const removeFromCart = (item) => {
     dispatch({
-      type: REMOVE_FROM_CART,
-      _id: item._id
+      type: "REMOVE_FROM_CART",
+      _id: item._id,
     });
-    idbPromise('cart', 'delete', { ...item });
-
+    idbPromise("cart", "delete", { ...item });
   };
 
   const onChange = (e) => {
     const value = e.target.value;
-    if (value === '0') {
+    if (value === "0") {
       dispatch({
-        type: REMOVE_FROM_CART,
-        _id: item._id
+        type: "REMOVE_FROM_CART",
+        _id: item._id,
       });
-      idbPromise('cart', 'delete', { ...item });
-
+      idbPromise("cart", "delete", { ...item });
     } else {
       dispatch({
-        type: UPDATE_CART_QUANTITY,
+        type: "UPDATE_CART_QUANTITY",
         _id: item._id,
-        purchaseQuantity: parseInt(value)
+        purchaseQuantity: parseInt(value),
       });
-      idbPromise('cart', 'put', { ...item, purchaseQuantity: parseInt(value) });
-
+      idbPromise("cart", "put", { ...item, purchaseQuantity: parseInt(value) });
     }
-  }
+  };
 
   return (
     <div className="flex-row">
       <div>
-        <img
-          src={`/images/${item.image}`}
-          alt=""
-        />
+        <img src={`/images/${item.image}`} alt="" />
       </div>
       <div>
-        <div>{item.name}, ${item.price}</div>
+        <div>
+          {item.name}, ${item.price}
+        </div>
         <div>
           <span>Qty:</span>
           <input
@@ -71,6 +60,6 @@ const CartItem = ({ item }) => {
       </div>
     </div>
   );
-}
+};
 
 export default CartItem;

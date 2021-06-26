@@ -25,13 +25,34 @@ const initialState = {
 test('UPDATE_PRODUCTS', () => {
   const action = { 
     type: 'UPDATE_PRODUCTS', 
-    products: [{},{}]
+    products: [{
+      _id: '500',
+      name: 'test item',
+      description: 'test text',
+      price: 99,
+      quantity: 1,
+      __typename: 'Product',
+      category: {
+        _id: '50',
+        __typename: 'Category'
+      }
+      
+
+    },{}]
   }
 
   const newState = productReducer(initialState, action)
 
   expect(newState.products.length).toBe(2);
   expect(initialState.products.length).toBe(0);
+  expect(newState.products[0]._id).toBe('500');
+  expect(newState.products[0].name).toBe('test item');
+  expect(newState.products[0].description).toBe('test text');
+  expect(newState.products[0].price).toBe(99);
+  expect(newState.products[0].quantity).toBe(1);
+  expect(newState.products[0].__typename).toBe('Product');
+  expect(newState.products[0].category._id).toBe('50');
+  expect(newState.products[0].category.__typename).toBe('Category');
   });
 
 
